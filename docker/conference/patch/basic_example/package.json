@@ -1,0 +1,26 @@
+{
+  "name": "oms-sample-conference",
+  "title": "Open WebRTC Toolkit Conference Sample",
+  "description": "Open WebRTC Toolkit JavaScript Conference Sample",
+  "version": "4.3.0",
+  "homepage": "http://webrtc.intel.com",
+  "author": "Intel WebRTC team",
+  "keywords": [
+    "webrtc",
+    "library",
+    "sdk",
+    "gateway",
+    "mcu"
+  ],
+  "dependencies": {
+    "body-parser": "~1.14.1",
+    "errorhandler": "",
+    "express": "",
+    "morgan": "",
+    "socket.io": "^2.2.0",
+    "spdy": ""
+  },
+  "engines": {
+    "node": ">=0.10"
+  }
+}

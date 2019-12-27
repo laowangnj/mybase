@@ -1,0 +1,16 @@
+################################
+# OWT WebRTC Conference Sample
+
+FROM owt-server:latest
+
+#ENV CLIENT_SAMPLE_PATH=/owt-client-javascript/dist/samples/conference
+
+WORKDIR /owt-server
+COPY patch ./
+ENV CLIENT_SAMPLE_PATH=/owt-server/basic_example
+#COPY build.json scripts
+RUN npm config set registry https://registry.npm.taobao.org
+RUN ./scripts/build.js -t all --check
+RUN ./scripts/pack.js -t all --install-module --sample-path $CLIENT_SAMPLE_PATH .
+
+RUN ./dist/video_agent/install_openh264.sh
