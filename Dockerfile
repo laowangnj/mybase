@@ -11,6 +11,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
 # Update repo
-RUN apt-get -y install curl sudo wget fakeroot lsb_release
+RUN apt-get -y install curl sudo wget fakeroot lsb-release
 RUN wget -qO- https://ubuntu.bigbluebutton.org/bbb-install.sh | bash -s -- -v xenial-220
 RUN apt-get clean
