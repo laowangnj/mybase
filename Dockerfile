@@ -12,7 +12,7 @@ RUN echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/source
 RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
 RUN apt-get update && apt-get -y install fakeroot openjdk-8-jdk-headless git sbt=1.2.7
 
-ARG COMMON_VERSION=22
+ARG COMMON_VERSION="0.0.20-SNAPSHOT"
 
 WORKDIR /bbb
 RUN git clone https://github.com/bigbluebutton/bigbluebutton.git
