@@ -7,10 +7,10 @@ FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update repo
-
-RUN echo "deb [trusted=yes] https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
-RUN apt-get update && apt-get -y install apt-utils
-RUN apt-get -y install curl sudo wget fakeroot lsb-release openjdk-8-jdk-headless git sbt=1.2.7
+RUN apt-get update && apt-get -y install curl wget sudo apt-utils fakeroot lsb-release
+RUN echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
+RUN apt-get update && apt-get -y install openjdk-8-jdk-headless git sbt=1.2.7
 
 ARG COMMON_VERSION=22
 WORKDIR /src
