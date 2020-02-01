@@ -14,8 +14,8 @@ RUN apt-get update && apt-get -y install fakeroot openjdk-8-jdk-headless git sbt
 
 ARG COMMON_VERSION=22
 
+WORKDIR /bbb
 RUN git clone https://github.com/bigbluebutton/bigbluebutton.git
-
 COPY ./bigbluebutton/bbb-common-message /bbb-common-message
 RUN cd /bbb-common-message \
  && sed -i "s|\(version := \)\".*|\1\"$COMMON_VERSION\"|g" build.sbt \
