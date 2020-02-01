@@ -16,18 +16,18 @@ ARG COMMON_VERSION=22
 
 WORKDIR /bbb
 RUN git clone https://github.com/bigbluebutton/bigbluebutton.git
-COPY /bbb/bigbluebutton/bbb-common-message /bbb-common-message
-RUN cd /bbb-common-message \
+RUN cp -a ./bigbluebutton/bbb-common-message ./
+RUN cd ./bbb-common-message \
  && sed -i "s|\(version := \)\".*|\1\"$COMMON_VERSION\"|g" build.sbt \
  && echo 'publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))' | tee -a build.sbt \
  && sbt compile \
  && sbt publish \
  && sbt publishLocal
 
-COPY /bbb/bigbluebutton/akka-bbb-apps /akka-bbb-apps
+RUN cp -a ./bigbluebutton/akka-bbb-apps ./
 
-RUN cd /akka-bbb-apps \
+RUN cd ./akka-bbb-apps \
  && find -name build.sbt -exec sed -i "s|\(.*org.bigbluebutton.*bbb-common-message[^\"]*\"[ ]*%[ ]*\)\"[^\"]*\"\(.*\)|\1\"$COMMON_VERSION\"\2|g" {} \; \
  && sbt compile
-RUN cd /akka-bbb-apps \
+RUN cd ./akka-bbb-apps \
  && sbt debian:packageBin
