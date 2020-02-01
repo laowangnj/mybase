@@ -13,11 +13,10 @@ RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E4
 RUN apt-get update && apt-get -y install fakeroot openjdk-8-jdk-headless git sbt=1.2.7
 
 ARG COMMON_VERSION=22
-WORKDIR /src
-RUN git clone https://github.com/bigbluebutton/bigbluebutton.git bbb
 
-WORKDIR /src/bbb/bbb-common-message
-COPY . /bbb-common-message
+RUN git clone https://github.com/bigbluebutton/bigbluebutton.git
+
+COPY ./bigbluebutton/bbb-common-message /bbb-common-message
 RUN cd /bbb-common-message \
  && sed -i "s|\(version := \)\".*|\1\"$COMMON_VERSION\"|g" build.sbt \
  && echo 'publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))' | tee -a build.sbt \
@@ -25,9 +24,7 @@ RUN cd /bbb-common-message \
  && sbt publish \
  && sbt publishLocal
 
-
-WORKDIR /src/bbb/akka-bbb-apps
-COPY . /akka-bbb-apps
+COPY ./bigbluebutton/akka-bbb-apps /akka-bbb-apps
 
 RUN cd /akka-bbb-apps \
  && find -name build.sbt -exec sed -i "s|\(.*org.bigbluebutton.*bbb-common-message[^\"]*\"[ ]*%[ ]*\)\"[^\"]*\"\(.*\)|\1\"$COMMON_VERSION\"\2|g" {} \; \
