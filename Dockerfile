@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update repo
 
-RUN echo "deb [trusted=yes] https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+RUN echo "deb [trusted=yes] https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
 RUN apt-get update
 RUN apt-get -y install curl sudo wget fakeroot lsb-release apt-utils openjdk-8-jdk-headless git sbt=1.2.7
 
