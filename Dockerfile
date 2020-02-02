@@ -25,8 +25,5 @@ RUN cd ./bbb-common-message \
  && sbt publishLocal
 
 RUN cp -a ./bigbluebutton/akka-bbb-apps ./
-
-RUN cd ./akka-bbb-apps \
- && sbt compile
-RUN cd ./akka-bbb-apps \
- && sbt debian:packageBin
+#RUN cd ./akka-bbb-apps && sbt compile
+#RUN cd ./akka-bbb-apps && sbt debian:packageBin
