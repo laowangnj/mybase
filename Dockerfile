@@ -27,7 +27,6 @@ RUN cd ./bbb-common-message \
 RUN cp -a ./bigbluebutton/akka-bbb-apps ./
 
 RUN cd ./akka-bbb-apps \
- && find -name build.sbt -exec sed -i "s|\(.*org.bigbluebutton.*bbb-common-message[^\"]*\"[ ]*%[ ]*\)\"[^\"]*\"\(.*\)|\1\"$COMMON_VERSION\"\2|g" {} \; \
  && sbt compile
 RUN cd ./akka-bbb-apps \
  && sbt debian:packageBin
