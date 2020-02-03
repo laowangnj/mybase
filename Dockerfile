@@ -5,7 +5,7 @@
 FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-
+ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 # Update repo
 RUN apt-get update && apt-get -y install apt-transport-https curl wget sudo apt-utils lsb-release
 RUN echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
@@ -16,14 +16,23 @@ ARG COMMON_VERSION="0.0.20-SNAPSHOT"
 
 WORKDIR /bbb
 RUN git clone https://github.com/bigbluebutton/bigbluebutton.git
+
 RUN cp -a ./bigbluebutton/bbb-common-message ./
-RUN cd ./bbb-common-message \
- && sed -i "s|\(version := \)\".*|\1\"$COMMON_VERSION\"|g" build.sbt \
- && echo 'publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))' | tee -a build.sbt \
+RUN cd ./bbb-common-message
  && sbt compile \
  && sbt publish \
  && sbt publishLocal
 
-RUN cp -a ./bigbluebutton/akka-bbb-apps ./
+RUN cp -a ./bigbluebutton/bbb-common-web ./
+RUN cd ./bbb-common-web
+ && sbt compile \
+ && sbt publish \
+ && sbt publishLocal
+
+#RUN cp -a ./bigbluebutton/akka-bbb-apps ./
+#RUN cd ./akka-bbb-apps && sbt compile
+#RUN cd ./akka-bbb-apps && sbt debian:packageBin
+
+#RUN cp -a ./bigbluebutton/bigbluebutton-web ./
 #RUN cd ./akka-bbb-apps && sbt compile
 #RUN cd ./akka-bbb-apps && sbt debian:packageBin
